@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ export class LoginComponent {
   eyeIcon : string = "fa-eye-slash";
   loginForm !: FormGroup;
 
-  constructor(private fb : FormBuilder){
+  constructor(private fb : FormBuilder, private _auth : AuthService, private _router : Router){
 
   }
 
@@ -32,9 +34,19 @@ export class LoginComponent {
     this.eyeIcon = this.isText ? "fa-eye" : "fa-eye-slash";
   }
 
-  onSubmit(){
+  onLogin(){
     if(this.loginForm.valid){
       console.log(this.loginForm.value);
+      this._auth.logIn(this.loginForm.value).subscribe({
+        next: (res)=>{
+          alert(res.message);
+          this.loginForm.reset();
+          this._router.navigate(['dashboard']);
+        },
+        error: (err)=>{
+          alert(err?.error.message)
+        }
+      })
     }
     else{
       console.log("Form is not valid!!");
@@ -43,5 +55,5 @@ export class LoginComponent {
     }
   }
 
-  
+
 }
