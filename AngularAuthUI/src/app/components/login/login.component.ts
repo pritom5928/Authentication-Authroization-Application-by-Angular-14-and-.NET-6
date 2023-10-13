@@ -18,7 +18,6 @@ export class LoginComponent {
   constructor(private fb: FormBuilder, 
     private _auth: AuthService, 
     private _router: Router){
-
   }
 
   ngOnInit() : void{
@@ -41,6 +40,7 @@ export class LoginComponent {
       this._auth.logIn(this.loginForm.value).subscribe({
         next: (res)=>{
           alert(res.message);
+          this._auth.setToken(res.token);
           this.loginForm.reset();
           this._router.navigate(['dashboard']);
         },
