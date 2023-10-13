@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +15,9 @@ export class LoginComponent {
   eyeIcon : string = "fa-eye-slash";
   loginForm !: FormGroup;
 
-  constructor(private fb : FormBuilder, private _auth : AuthService, private _router : Router){
+  constructor(private fb: FormBuilder, 
+    private _auth: AuthService, 
+    private _router: Router){
 
   }
 
@@ -44,14 +45,14 @@ export class LoginComponent {
           this._router.navigate(['dashboard']);
         },
         error: (err)=>{
-          alert(err?.error.message)
+          alert(err?.error.message);
         }
       })
     }
     else{
       console.log("Form is not valid!!");
       ValidateForm.validateAllFormFields(this.loginForm);
-      alert("Your form is invalid")
+      alert("Your form is invalid");
     }
   }
 
