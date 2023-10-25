@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserStoreService } from 'src/app/services/user-store.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +18,8 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, 
     private _auth: AuthService, 
-    private _router: Router){
+    private _router: Router,
+    private _userStore: UserStoreService){
   }
 
   ngOnInit() : void{
@@ -39,8 +41,12 @@ export class LoginComponent {
       console.log(this.loginForm.value);
       this._auth.logIn(this.loginForm.value).subscribe({
         next: (res)=>{
+          debugger;
           alert(res.message);
           this._auth.setToken(res.token);
+          const tokenPayload = this._auth.decodedToken();
+          this._userStore.setFullNameForStore(tokenPayload.name);
+          this._userStore.setRoleForStore(tokenPayload.role);
           this.loginForm.reset();
           this._router.navigate(['dashboard']);
         },
