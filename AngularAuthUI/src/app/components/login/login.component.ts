@@ -43,7 +43,8 @@ export class LoginComponent {
         next: (res)=>{
           debugger;
           alert(res.message);
-          this._auth.setToken(res.token);
+          this._auth.setToken(res.accessToken);
+          this._auth.setRefreshToken(res.refreshToken);
           const tokenPayload = this._auth.decodedToken();
           this._userStore.setFullNameForStore(tokenPayload.name);
           this._userStore.setRoleForStore(tokenPayload.role);
