@@ -53,11 +53,12 @@ export class TokenInterceptor implements HttpInterceptor {
     .pipe(
       switchMap((data : TokenApiModel)=> {
         this._authService.setToken(data.accessToken);
-        this._authService.setRefreshToken(data.refreshToken)
+        this._authService.setRefreshToken(data.refreshToken);
 
         request = request.clone({
           setHeaders: { Authorization: `Bearer ${data.accessToken}` }
         })
+        
         return next.handle(request);
       }),
       catchError((err)=> {

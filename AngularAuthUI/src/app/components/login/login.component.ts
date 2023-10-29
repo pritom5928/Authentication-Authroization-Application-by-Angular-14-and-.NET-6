@@ -16,6 +16,9 @@ export class LoginComponent {
   eyeIcon : string = "fa-eye-slash";
   loginForm !: FormGroup;
 
+  public resetPasswordEmail : string;
+  public isValidEmail : boolean = false;
+
   constructor(private fb: FormBuilder, 
     private _auth: AuthService, 
     private _router: Router,
@@ -63,5 +66,23 @@ export class LoginComponent {
     }
   }
 
+  checkValidEmail(event: string){
+    const value = event;
+    const pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
+    this.isValidEmail = pattern.test(value);
+    return this.isValidEmail;
+  }
+
+  confirmToSend(){
+    if(this.checkValidEmail(this.resetPasswordEmail))
+    {
+      console.log(this.resetPasswordEmail);
+      this.resetPasswordEmail = '';
+      document.getElementById('closeResetPasswordModal').click();
+      //api call
+    }
+  }
+  
 
 }
