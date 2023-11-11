@@ -62,3 +62,7 @@ D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAP
 D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\obj\Debug\net6.0\AngularAuthAPI.pdb
 D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\obj\Debug\net6.0\AngularAuthAPI.genruntimeconfig.cache
 D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\obj\Debug\net6.0\ref\AngularAuthAPI.dll
+D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\bin\Debug\net6.0\MailKit.dll
+D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\bin\Debug\net6.0\MimeKit.dll
+D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\bin\Debug\net6.0\NETCore.MailKit.dll
+D:\Self Files\Full Stack study\Angular\angular_auth\AngularAuthAPI\AngularAuthAPI\bin\Debug\net6.0\BouncyCastle.Crypto.dll

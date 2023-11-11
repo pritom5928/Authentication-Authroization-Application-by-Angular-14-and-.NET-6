@@ -43,7 +43,7 @@
                                      You're receiving this email because you requested a password reset
                                         </p>
                                         <a href=""'http://localhost:4200/reset?email={email}&code={emailToken}'""
-target=""'_blank'""                                          style=""background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"">Reset
+target=""_blank""                                          style=""background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"">Reset
                                             Password</a>
                                     </td>
                                 </tr>

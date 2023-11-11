@@ -2,6 +2,7 @@
 using AngularAuthAPI.Helpers;
 using AngularAuthAPI.Models;
 using AngularAuthAPI.Models.Dto;
+using AngularAuthAPI.UtilityService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +20,15 @@ namespace AngularAuthAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly AppDbContext _db;
-        public UserController(AppDbContext db)
+        private IConfiguration _configuration;
+        private IEmailService _emailService;
+        public UserController(AppDbContext db, 
+            IConfiguration configuration,
+            IEmailService emailService)
         {
             _db = db;
+            _configuration = configuration;
+            _emailService = emailService;
         }
 
         [HttpPost("authenticate")]
@@ -234,6 +241,39 @@ namespace AngularAuthAPI.Controllers
 
 
             return sb.ToString();
+        }
+
+
+        [HttpPost("send-reset-email/{email}")]
+        public async Task<IActionResult> SendEmail(string email)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if(user is null)
+            {
+                return NotFound(new
+                {
+                    StatusCode = 404,
+                    Message = "Email doesn't exists"
+                });
+            }
+            var tokenBytes = RandomNumberGenerator.GetBytes(64);
+            var emailToken = Convert.ToBase64String(tokenBytes);
+            user.ResetPasswordToken = emailToken;
+            user.ResetPasswordExpiry = DateTime.Now.AddMinutes(5);
+
+            string from = _configuration["EmailSettings:From"];
+            var emailModel = new EmailModel(email, "Reset Password", EmailBody.EmailStringBody(email, emailToken));
+
+            _emailService.SendMail(emailModel);
+
+            _db.Entry(user).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+
+            return Ok(new
+            {
+                StatusCode = 200,
+                Message = "Email sent successfully"
+            });
         }
     }
 }
